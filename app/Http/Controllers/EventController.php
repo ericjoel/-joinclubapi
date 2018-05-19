@@ -7,6 +7,11 @@ use App\Event;
 
 class EventController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function delete(Event $event) 
     {
         $event->delete();
@@ -26,6 +31,7 @@ class EventController extends Controller
 
     public function store(Request $request)
     {
+        $request->user()->authorizeRoles('administrator');
         $event = Event::create($request->all());
         
         return response()->json($event, 201);

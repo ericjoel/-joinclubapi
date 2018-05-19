@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Auth\AuthenticationException;
 
 class User extends Authenticatable
 {
@@ -33,5 +34,45 @@ class User extends Authenticatable
         $this->save();
 
         return $this->api_token;
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function authorizeRoles($roles)
+    {
+        if (is_array($roles)) {
+            if (!$this->hasAnyRole($roles) )
+                throw new AuthenticationException;
+        }
+        else {
+            if (!$this->hasRole($roles))
+                throw new AuthenticationException;  
+        }
+        return true;
+    }
+
+    /**
+     * Check if exist any role passed by parameter
+     * 
+     * @param array $roles
+     * @return bool
+     */
+    public function hasAnyRole($roles) 
+    {
+        return null !== $this->roles()->whereIn('name', $roles)->first();
+    }
+
+    /**
+     * Check if exist the role specified in this user
+     * 
+     * @param Role $role
+     * @return bool
+     */
+    public function hasRole($role)
+    {
+        return null !== $this->roles()->where('name', $role)->first();
     }
 }
