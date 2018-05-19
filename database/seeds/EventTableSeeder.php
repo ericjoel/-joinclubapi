@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Event;
+use App\Hall;
 
 class EventTableSeeder extends Seeder
 {
@@ -14,6 +15,8 @@ class EventTableSeeder extends Seeder
     {
         Event::truncate();
 
+        $hall = Hall::where('name', 'Alfonso Ugarte')->first();
+
         $faker = \Faker\Factory::create();
 
         for ($i = 0; $i < 10; $i++) {
@@ -21,7 +24,8 @@ class EventTableSeeder extends Seeder
                 'name'          => $faker->sentence($nbWords = 4, $variableNbWords = true),
                 'date_event'    => $faker->date(),
                 'start_hour'    => $faker->time(),
-                'finish_hour'   => $faker->time()
+                'finish_hour'   => $faker->time(),
+                'hall_id'       => $hall->id
             ]);
         }
     }
