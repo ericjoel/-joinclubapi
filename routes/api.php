@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
-
+use App\Event;
+use App\User;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,4 +16,17 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+Route::post('logout', 'Auth\LoginController@logout');
+
+Route::post('register', 'Auth\RegisterController@register');
+Route::post('login', 'Auth\LoginController@login');
+
+Route::get('events', 'EventController@index');
+Route::get('events/{event}', 'EventController@show');
+
+Route::group(['middleware' => 'auth:api'], function() {    
+    Route::post('events', 'EventController@store');
+    Route::put('events/{event}', 'EventController@update');
+    Route::delete('events/{event}', 'EventController@delete');
 });
