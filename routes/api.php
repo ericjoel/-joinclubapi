@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
-
+use App\Event;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,3 +16,9 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('events', 'EventController@index');
+Route::get('events/{id}', 'EventController@show');
+Route::post('events', 'EventController@store');
+Route::put('events/{id}', 'EventController@update');
+Route::delete('events/{id}', 'EventController@delete');
