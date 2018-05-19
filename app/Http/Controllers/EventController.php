@@ -6,12 +6,7 @@ use Illuminate\Http\Request;
 use App\Event;
 
 class EventController extends Controller
-{
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    
+{    
     public function delete(Event $event) 
     {
         $event->delete();

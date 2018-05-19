@@ -22,9 +22,10 @@ Route::post('logout', 'Auth\LoginController@logout');
 Route::post('register', 'Auth\RegisterController@register');
 Route::post('login', 'Auth\LoginController@login');
 
-Route::group(['middleware' => 'auth:api'], function() {
-    Route::get('events', 'EventController@index');
-    Route::get('events/{event}', 'EventController@show');
+Route::get('events', 'EventController@index');
+Route::get('events/{event}', 'EventController@show');
+
+Route::group(['middleware' => 'auth:api'], function() {    
     Route::post('events', 'EventController@store');
     Route::put('events/{event}', 'EventController@update');
     Route::delete('events/{event}', 'EventController@delete');
