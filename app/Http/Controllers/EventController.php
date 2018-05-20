@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Event;
 use App\BusinessRules\HallIsAvailable;
+use App\BusinessRules\SpeakerCanMakeThePresentation;
+use App\BusinessRules\SpeakerIsAvailable;
 
 class EventController extends Controller
 {    
@@ -56,12 +58,14 @@ class EventController extends Controller
         ]);
 
         $this->business([
-            new HallIsAvailable($request->hall_id, $request->date_event, $request->start_hour, $request->finish_hour)
+            new HallIsAvailable($request->hall_id, $request->date_event, $request->start_hour, $request->finish_hour),
+            new SpeakerIsAvailable($request->speaker_id, $request->date_event, $request->start_hour, $request->finish_hour),
+            new SpeakerCanMakeThePresentation($request->speaker_id, $request->presentation_id)
         ]);
 
-        //$event = Event::create($request->all());
+        $event = Event::create($request->all());
         
-        return response()->json(null, 201);
+        return response()->json($event, 201);
     }
 
     public function update(Request $request, Event $event) 

@@ -20,5 +20,9 @@ class PresentationTableSeeder extends Seeder
             'name' => 'Angular 2.0 - Otra perspectiva',
             'description' => $fake->paragraph($nbSentences = 3, $variableNbSentences = true)
         ]);
+        Presentation::create([
+            'name' => 'React - Reactivando tu motivación',
+            'description' => $fake->paragraph($nbSentences = 3, $variableNbSentences = true)
+        ]);
     }
 }

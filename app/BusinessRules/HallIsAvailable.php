@@ -16,7 +16,6 @@ class HallIsAvailable
 
     public function passes()
     {
-        // ( (Y1 <= X1 AND Y2 >= X1) OR (Y2 >= X2 AND Y1 <= X2) )
         return DB::table('events')
             ->where([
                 ['date_event', $this->date_event],
@@ -24,15 +23,11 @@ class HallIsAvailable
             ])
             ->where(function ($query) {
                 $query->where([
-                    ['start_hour', '<=', $this->start_hour],
+                    ['start_hour', '<=', $this->finish_hour],
                     ['finish_hour', '>=', $this->start_hour]
-                ])
-                ->where([
-                    ['finish_hour', '>=', $this->finish_hour],
-                    ['start_hour', '<=', $this->finish_hour]
                 ]);
             })
-            ->exists();
+            ->doesntExist();
     }
 
     public function message()
