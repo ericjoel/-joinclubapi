@@ -18,12 +18,14 @@ class HallsTableSeeder extends Seeder
 
         Hall::create([
             'name'      => 'Alfonso Ugarte',
-            'address'   => $faker->address()
+            'address'   => $faker->address(),
+            'capacity'  => 20
         ]);
 
         Hall::create([
             'name'      => 'Rivera Nieto',
-            'address'   => $faker->address()
+            'address'   => $faker->address(),
+            'capacity'  => 1
         ]);
     }
 }
