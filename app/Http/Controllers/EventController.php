@@ -28,21 +28,6 @@ class EventController extends Controller
         return $event;
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'date_event' => 'required|date',
-            'start_hour' => 'required|date_format:H:i',
-            'finish_hour' => 'required|date_format:H:i|after:time_start'
-        ]);
-    }
-
     public function store(Request $request)
     {
         $request->user()->authorizeRoles('administrator');
