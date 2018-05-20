@@ -24,7 +24,6 @@ class EventTableSeeder extends Seeder
 
         for ($i = 0; $i < 10; $i++) {
             Event::create([
-                'name'              => $faker->sentence($nbWords = 4, $variableNbWords = true),
                 'date_event'        => $faker->date(),
                 'start_hour'        => $faker->time(),
                 'finish_hour'       => $faker->time(),
