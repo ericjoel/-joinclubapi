@@ -12,4 +12,17 @@ class Event extends Model
     {
         return $this->belongsToMany(User::class);
     }
+
+    public function isFull()
+    {
+        $hall = Hall::where('id', $this->hall_id)->first();
+        $countMembers = $this->members()->count();
+
+        return ($countMembers >= $hall->capacity);
+    }
+
+    public function addMember($user)
+    {
+        $this->members()->attach($user);
+    }
 }

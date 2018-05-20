@@ -80,4 +80,23 @@ class User extends Authenticatable
     {
         return null !== $this->roles()->where('name', $role)->first();
     }
+
+    public function verifyAvailableUserToEvent($event)
+    {
+        return $this->events()->where([
+            ['date_event', $event->date_event],
+            ['start_hour', '<=', $event->finish_hour],
+            ['finish_hour', '>=', $event->start_hour]
+        ])
+        ->doesntExist();
+    }
+
+    public function maximunCapacityExceed()
+    {
+        $eventsCount = $this->events()->count();
+
+        return $this->maximun_capacity == null 
+                    ? false 
+                    : ($eventsCount > $this->maximun_capacity ? true : false);
+    }
 }
