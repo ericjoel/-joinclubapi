@@ -77,7 +77,15 @@ class EventController extends Controller
     {
         $request->user()->authorizeRoles('administrator');
 
-        return response()->json('test', 201);
+        $this->business([
+            new MemberIsAvailable($event, $user),
+            new MemberMaximunCapacity($user),
+            new HallCapacity($event)
+        ]);
+        
+        $event->addMember($user);
+
+        return response()->json($event, 201);
     }
 
     public function update(Request $request, Event $event) 
