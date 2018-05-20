@@ -8,6 +8,6 @@ class Speaker extends Model
 {
     public function presentations()
     {
-        return $this->belongsToMany(Presentation::class);
+        return $this->belongsToMany(Presentation::class, 'presentation_speaker');
     }
 }
