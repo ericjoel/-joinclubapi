@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Event;
+use App\User;
 use App\BusinessRules\HallIsAvailable;
 use App\BusinessRules\SpeakerCanMakeThePresentation;
 use App\BusinessRules\SpeakerIsAvailable;
+use App\BusinessRules\MemberIsAvailable;
+use App\BusinessRules\MemberMaximunCapacity;
+use App\BusinessRules\HallCapacity;
 
 class EventController extends Controller
 {    
@@ -51,6 +55,29 @@ class EventController extends Controller
         $event = Event::create($request->all());
         
         return response()->json($event, 201);
+    }
+
+    public function storeMember(Request $request, Event $event)
+    {
+        $request->user()->authorizeRoles(['administrator', 'member', 'vip member']);
+
+        $user = $request->user();
+
+        $this->business([
+            new MemberIsAvailable($event, $user),
+            new MemberMaximunCapacity($user),
+            new HallCapacity($event)
+        ]);
+        
+        $event->addMember($user);
+        return response()->json($event, 201);
+    }
+
+    public function storeMemberAdmin(Request $request, Event $event, User $user)
+    {
+        $request->user()->authorizeRoles('administrator');
+
+        return response()->json('test', 201);
     }
 
     public function update(Request $request, Event $event) 

@@ -29,4 +29,6 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::post('events', 'EventController@store');
     Route::put('events/{event}', 'EventController@update');
     Route::delete('events/{event}', 'EventController@delete');
+    Route::post('events/{event}/members', 'EventController@storeMember');
+    Route::post('events/{event}/members/{user}', 'EventController@storeMemberAdmin');
 });
