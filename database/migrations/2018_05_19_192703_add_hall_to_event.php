@@ -15,7 +15,6 @@ class AddHallToEvent extends Migration
     {
         Schema::table('events', function($table){
             $table->integer('hall_id')->unsigned();
-            $table->foreign('hall_id')->references('id')->on('halls');
         });
     }
 
@@ -27,7 +26,6 @@ class AddHallToEvent extends Migration
     public function down()
     {
         Schema::table('events', function($table){
-            $table->dropForeign('events_hall_id_foreign');
             $table->dropColumn('hall_id');
         });
     }

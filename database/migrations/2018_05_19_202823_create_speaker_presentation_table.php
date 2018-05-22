@@ -17,10 +17,6 @@ class CreateSpeakerPresentationTable extends Migration
             $table->increments('id');
             $table->integer('speaker_id')->unsigned();
             $table->integer('presentation_id')->unsigned();
-            $table->foreign('speaker_id')
-                    ->references('id')->on('spakers');
-            $table->foreign('presentation_id')
-                ->references('id')->on('presentations');
             $table->timestamps();
         });
     }
