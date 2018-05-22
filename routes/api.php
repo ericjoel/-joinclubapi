@@ -25,6 +25,11 @@ Route::post('login', 'Auth\LoginController@login');
 Route::get('events', 'EventController@index');
 Route::get('events/{event}', 'EventController@show');
 
+Route::get('presentations', 'PresentationController@index');
+Route::get('presentations/{presentation}/speakers', 'PresentationController@speakers');
+Route::get('halls', 'HallController@index');
+Route::get('halls/{hall}/events', 'HallController@getEvents');
+
 Route::group(['middleware' => 'auth:api'], function() {    
     Route::post('events', 'EventController@store');
     Route::put('events/{event}', 'EventController@update');

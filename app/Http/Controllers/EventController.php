@@ -24,12 +24,12 @@ class EventController extends Controller
 
     public function index() 
     {
-        return Event::all();
+        return Event::with(['hall', 'presentation', 'speaker'])->orderBy('date_event', 'desc')->get();
     }
 
     public function show(Event $event) 
     {
-        return $event;
+        return $event->with(['hall', 'presentation', 'speaker'])->where('id', $event->id)->get()->first();
     }
 
     public function store(Request $request)
@@ -43,7 +43,8 @@ class EventController extends Controller
             'finish_hour'       => 'required|date_format:H:i|after:start_hour',
             'hall_id'           => 'required|integer|exists:mysql.halls,id',
             'speaker_id'        => 'required|integer|exists:mysql.speakers,id',
-            'presentation_id'   => 'required|integer|exists:mysql.presentations,id'
+            'presentation_id'   => 'required|integer|exists:mysql.presentations,id',
+            'capacity'          => 'required|integer'
         ]);
 
         $this->business([

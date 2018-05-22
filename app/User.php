@@ -8,9 +8,11 @@ use Illuminate\Auth\AuthenticationException;
 
 class User extends Authenticatable
 {
+    public $isAdmin = false;
+
     use Notifiable;
 
-    /**
+    /** 
      * The attributes that are mass assignable.
      *
      * @var array

@@ -29,7 +29,8 @@ class EventTableSeeder extends Seeder
                 'finish_hour'       => '18:00',
                 'hall_id'           => $hall->id,
                 'presentation_id'   => $presentation->id,
-                'speaker_id'        => $speaker->id
+                'speaker_id'        => $speaker->id,
+                'capacity'          => 10
             ]);
         }
     }
