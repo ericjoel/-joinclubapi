@@ -15,7 +15,6 @@ class AddPresentationToEvent extends Migration
     {
         Schema::table('events', function($table){
             $table->integer('presentation_id')->unsigned();
-            $table->foreign('presentation_id')->references('id')->on('presentations');
         });
     }
 
@@ -27,7 +26,6 @@ class AddPresentationToEvent extends Migration
     public function down()
     {
         Schema::table('events', function($table){
-            $table->dropForeign('events_presentation_id_foreign');
             $table->dropColumn('presentation_id');
         });
     }

@@ -14,7 +14,6 @@ class DeletePresentationColumnOnEventTable extends Migration
     public function up()
     {
         Schema::table('events', function($table){
-            $table->dropForeign('events_presentation_id_foreign');
             $table->dropColumn('presentation_id');
         });
     }
@@ -28,7 +27,6 @@ class DeletePresentationColumnOnEventTable extends Migration
     {
         Schema::table('events', function($table){
             $table->integer('presentation_id')->unsigned();
-            $table->foreign('presentation_id')->references('id')->on('presentations');
         });
     }
 }
